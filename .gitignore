@@ -1,5 +1,8 @@
+# intellij
 .idea
+**/out
 
 **/.gradle/
 **/build/
 **/*.class
+
