@@ -1,0 +1,3 @@
+dependencies {
+    compile group: 'com.typesafe.akka', name: 'akka-agent_2.12', version: "${akkaVersion}"
+}

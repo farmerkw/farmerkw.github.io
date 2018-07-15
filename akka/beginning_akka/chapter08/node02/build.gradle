@@ -1,0 +1,7 @@
+apply plugin: 'application'
+
+mainClassName = 'kr.kwfarm.study.akka.beginningakka.chapter08.Node02Main'
+
+dependencies {
+    compile project(":chapter08:common")
+}

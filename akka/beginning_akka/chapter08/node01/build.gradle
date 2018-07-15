@@ -1,0 +1,8 @@
+apply plugin: 'application'
+
+mainClassName = 'kr.kwfarm.study.akka.beginningakka.chapter08.Node01Main'
+
+dependencies {
+    compile project(":chapter08:common")
+    compile group: 'org.apache.camel', name: 'camel-jetty', version: '2.22.0'
+}

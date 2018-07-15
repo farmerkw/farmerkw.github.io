@@ -1,0 +1,19 @@
+
+allprojects {
+
+
+	group 'kr.kwfarm.study.akka.beginning-akka'
+	version '0.0.1-SNAPSHOT'
+	
+	repositories {
+		jcenter()
+	}	
+}
+
+subprojects {
+	apply plugin: 'java'
+
+	dependencies {
+		compile group: 'com.typesafe.akka', name: 'akka-actor_2.12', version: "${akkaVersion}"
+	}
+}

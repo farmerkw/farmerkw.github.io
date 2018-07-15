@@ -1,0 +1,4 @@
+dependencies {
+    compile group: 'com.typesafe.akka', name: 'akka-camel_2.12', version: "${akkaVersion}"
+    compile group: 'com.typesafe.akka', name: 'akka-cluster_2.12', version:"${akkaVersion}"
+}
