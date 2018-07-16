@@ -16,6 +16,9 @@ ln -s kafka_2.12-1.1.0 default
 # 환경 변수
 echo "export KAFKA_HOME=\"$HOME/apps/kafka/default\"" >> ~/.profile
 echo "export PATH=\"\$PATH:\$KAFKA_HOME/bin\"" >> ~/.profile
+echo "alias kafka-start=\"sudo systemctl start kafka.service\"" >> ~/.bash_aliases
+echo "alias kafka-stop=\"sudo systemctl stop kafka.service\"" >> ~/.bash_aliases
+echo "alias kafka-status=\"sudo systemctl status kafka.service\"" >> ~/.bash_aliases
 source ~/.profile
 echo $KAFKA_HOME
 
@@ -32,7 +35,7 @@ sed -i -e "s/zookeeper.connect=localhost:2181/zookeeper.connect=${zookeeper_conn
 # systemd 등록
 ## systemd 등록
 export KAFKA_SYSTEMD_FILE="/etc/systemd/system/kafka.service"
-echo "[UNIT]
+echo "[Unit]
 Description=kafka-server
 After=network,target
 
@@ -41,7 +44,7 @@ Type=simple
 User=$USER
 Group=$USER
 SyslogIdentifier=kafka-server
-workingDirectory=$KAFKA_HOME
+WorkingDirectory=$KAFKA_HOME
 Restart=wlways
 RestartSec=0s
 ExecStart=$KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server.properties
