@@ -22,6 +22,9 @@ echo "alias kafka-status=\"sudo systemctl status kafka.service\"" >> ~/.bash_ali
 source ~/.profile
 echo $KAFKA_HOME
 
+# zookeepr mapping을 위한 환경 변수 
+export zookeeper_server="zookeeper-01:2181,zookeeper-02:2181,zookeeper-03:2181\/kwfarm"
+
 # config 수정
 ## 고유한 ID 할당
 broker_id=$(echo $HOSTNAME | awk -F- '{print $2}' | sed 's/^0*//')
@@ -30,7 +33,7 @@ sed -i -e "s/broker.id=0/broker.id=${broker_id}/g" $KAFKA_HOME/config/server.pro
 ## log directory
 sed -i -e 's/log.dirs=\/tmp\/kafka-logs/log.dirs=\/data\/kafka/g' $KAFKA_HOME/config/server.properties
 ## zookeeper
-sed -i -e "s/zookeeper.connect=localhost:2181/zookeeper.connect=${zookeeper_connection}/g" $KAFKA_HOME/config/server.properties
+sed -i -e "s/zookeeper.connect=localhost:2181/zookeeper.connect=${zookeeper_server}/g" $KAFKA_HOME/config/server.properties
 
 # systemd 등록
 ## systemd 등록
@@ -51,5 +54,6 @@ ExecStart=$KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server.proper
 ExecStop=$KAFKA_HOME/bin/kafka-server-stop.sh" | sudo tee $KAFKA_SYSTEMD_FILE
 
 sudo systemctl daemon-reload
-sudo systemctl start kafka-server.service 
+sudo systemctl start kafka.service 
+sudo systemctl status kafka.service 
 ```
