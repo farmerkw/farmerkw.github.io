@@ -3,6 +3,9 @@ ubuntu-16.04
 
 ## 설치
 ```bash
+# jdk install
+sudo apt-get install -y openjdk-8-jdk
+
 # 기본 directory 생성
 mkdir -p /data/zookeeper
 mkdir -p ~/apps/zookeeper
@@ -16,6 +19,7 @@ ln -s zookeeper-3.4.12 default
 # node id 생성
 # host name 뒤에 숫자 형식이기 때문에 잘라서 사용
 echo $HOSTNAME | awk -F- '{print $2}' | sed 's/^0*//' > /data/zookeeper/myid
+cat /data/zookeeper/myid
 
 # 환경 변수 설정
 echo "export ZOOKEEPER_HOME=\"$HOME/apps/zookeeper/default\"" >> ~/.profile
