@@ -1,7 +1,29 @@
 # Kafka
 kafka 관련 명령어 실행시 zookeeepr 정보가 필요 하기 때문에 환경 변수로 설정
-export ZOO_SERVER="zookeeper-01:2181,zookeeper-02:2181,zookeeper-03:2181/test"
-export KAFKA_SERVER="kafka-01:9092,kafka-02:9092,kafka-03:9092"
+echo "export ZOO_SERVER=\"zookeeper-01:2181,zookeeper-02:2181,zookeeper-03:2181/kwfarm\"" >> ~/.profile
+echo "export KAFKA_SERVER=\"kafka-01:9092,kafka-02:9092,kafka-03:9092\"" >> ~/.profile
+source ~/.profile
+
+
+## 기본 테스트
+```bash
+# Topic 만들기 zookeeper-01 server
+kafka-topics.sh --zookeeper $ZOO_SERVER \
+--replication-factor 2 \
+--partitions 2 \
+--topic kwfarm \
+--create
+
+# consumer (zookeeper-02 server)
+kafka-console-consumer.sh \
+--bootstrap-server $KAFKA_SERVER \
+--topic kwfarm
+
+# message 보내기 (zookeeper-03 server)
+kafka-console-producer.sh \
+--broker-list $KAFKA_SERVER \
+--topic kwfarm
+```
 
 ## zookeeper
 역활
@@ -12,12 +34,7 @@ export KAFKA_SERVER="kafka-01:9092,kafka-02:9092,kafka-03:9092"
 - 카프카 토픽 Acls
 
 
-## Topic 만들기
-kafka-topics.sh --zookeeper $zoo_server \
---replication-factor 2 \
---partitions 2 \
---topic kwfarm2 \
---create
+
 
 # partition
 
