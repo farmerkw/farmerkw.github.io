@@ -15,13 +15,12 @@ source ~/.profile
 - 카프카 토픽 Acls
 
 ## partition
-topic을 구성하는 단위이며 메세지를 저장(?) 하는 단위이다.
-product가 메세지를 보내면 partition 단위로 저장된다.
-partition내에는 offset이 존재하여, 순서가 보장 되지만 다수의 partition으로 구성 된 
+topic은 하나 이상의 partition으로 구성되며 메세지를 저장 하는 단위이다.
+partition내에는 offset이 존재하여, partition안의 메세지는 순서가 보장 되지만 다수의 partition으로 구성 된 
 topic내에서 메세지 순서는 보장되지 않는다.
 
 ## replication
-replication이 구성시 topic 자체가 아닌 partition을 기준으로 복제 되며
+replication이 구성시 topic이 아닌 partition을 기준으로 복제 되며
 partition은 leader와 flower로 구분되며, leader가 읽기, 쓰기를 담당한다.
 flower는 leader의 정보를 가져다가 동기화 한다.
 
