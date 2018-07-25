@@ -6,4 +6,6 @@ https://superuser.com/questions/20549/how-can-i-encrypt-a-string-in-the-shell
 openssl genrsa -out key.txt 2048
 # 암호화
 echo "Hello World Bash" | openssl rsautl -inkey key.txt -encrypt > encrypt.txt
+# 복호화
+openssl rsautl -inkey key.txt -decrypt <encrypt.txt
 ```
