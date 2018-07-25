@@ -1,5 +1,9 @@
 # docker
 
+## local image 검색
+sudo docker images ${imageName}
+
+
 ## Tip
 - local image 전체 지우기 
 ```bash
