@@ -56,72 +56,12 @@ replication이 3이고, min.insync.replicas가 3인 경우 하나의 partition�
 
 ## consumer
 ### consumer group
+하나의 partition은 하나의 consumer만 메세지를 가져 갈 수 있으며(consumer는 다수의 partition에서 메세지를 가져 올 수 있다.) 각 consumer의 partition 소유권을 분배 하는 기준이 consumer group이다.
+consumer group내에서 consumer의 추가로 인하여 partition 소유권이 이동하는 것을 리밸런스(rebalance)라 한다.
+
+하나의 topic에 대해서 다수개의 consumer group이 메세지를 가져갈 수 있으며, 각 group별로 offeset이 관리 된다.
 
 ### commit
-
-
-
-
-
-```bash
-kafka-topics.sh --zookeeper $zoo_server \
---replication-factor 2 \
---partitions 2 \
---topic kwfarm2 \
---create
-
-
-kafka-topics.sh --zookeeper $zoo_server --topic kwfarm2 --describe
-Topic:kwfarm2	PartitionCount:2	ReplicationFactor:2	Configs:
-	Topic: kwfarm2	Partition: 0	Leader: 3	Replicas: 3,2	Isr: 3,2
-	Topic: kwfarm2	Partition: 1	Leader: 1	Replicas: 1,3	Isr: 1,3
-
-
-kafka down
-
-
-
-kafka-topics.sh --zookeeper $zoo_server --topic kwfarm2 --describe
-Topic:kwfarm2	PartitionCount:2	ReplicationFactor:2	Configs:
-	Topic: kwfarm2	Partition: 0	Leader: 3	Replicas: 3,2	Isr: 3
-	Topic: kwfarm2	Partition: 1	Leader: 1	Replicas: 1,3	Isr: 1,3
-
-
-
-{"version":1,
-"partitions":[
-        {"topic":"kwfarm2", "partition":0, "replicas": [3,1]},
-        {"topic":"kwfarm2", "partition":1, "replicas": [1,3]}
-]}
-
-
-kafka-reassign-partitions.sh --zookeeper $zoo_server --reassignment-json-file rf.json --execute
-
-
-kafka-topics.sh --zookeeper $zoo_server --topic kwfarm2 --describe
-Topic:kwfarm2	PartitionCount:2	ReplicationFactor:2	Configs:
-	Topic: kwfarm2	Partition: 0	Leader: 3	Replicas: 3,1	Isr: 3,1
-	Topic: kwfarm2	Partition: 1	Leader: 1	Replicas: 1,3	Isr: 1,3
-
-
-    
-
-```
-
-- replacation 되고 있는 group
-- ISR에 속한 구성원망이 Leader로 승격 가능
-
-
-
-
-console consumer
-kafka-console-consumer.sh \
---bootstrap-server $KAFKA_SERVER \
---topic kwfarm \
---from-beginning
-
-
-console producer
-kafka-console-producer.sh \
---broker-list $KAFKA_SERVER \
---topic kwfarm
+consumer에서 메세지를 pull 한 후 위치 정보를 업데이트 하는 것
+- 자동 커밋
+- 수동 커밋
