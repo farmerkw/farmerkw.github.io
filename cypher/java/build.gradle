@@ -1,0 +1,40 @@
+group 'kr.kwfarm.study.java'
+version '0.0.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.2'
+    }
+}
+
+apply plugin: 'org.junit.platform.gradle.plugin'
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'com.google.guava', name: 'guava', version: '23.6-jre'
+
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    compile 'org.projectlombok:lombok:1.16.16'
+
+    // SEED 테스트를 위한 설정
+    compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.58'
+
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.0.2'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.0.2'
+    testCompile 'org.hamcrest:hamcrest-junit:2.0.0.0'
+
+    // https://github.com/junit-team/junit5-samples/issues/45
+    // https://github.com/sbrannen/junit5-demo/commit/fa6afe6214746b7ebc0e25eedc6f8853d67fc7ba
+    testCompileOnly('org.apiguardian:apiguardian-api:1.0.0')
+
+}
